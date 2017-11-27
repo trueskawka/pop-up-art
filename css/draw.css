@@ -1,0 +1,69 @@
+#container {
+  max-width: 900px;
+  min-width: 400px;
+  margin: 0 auto;
+}
+
+#tools {
+  display: inline-block;
+  float: left;
+  min-width: 60px;
+}
+
+#canvas,
+#test-canvas {
+  position: relative;
+  display: inline-block;
+  float: left;
+  width: 400px;
+  height: 400px;
+  box-shadow: inset 0 0 1px black;
+}
+
+#test-canvas,
+#test-button {
+  margin-top: 50px;
+  margin-left: 60px;
+}
+
+#test-button {
+  margin-left: 40px;
+}
+
+#gen-css {
+  display: inline-block;
+  float: right;
+  min-width: 400px;
+  min-height: 400px;
+}
+
+#gen-code {
+  display: block;
+  min-width: 400px;
+  min-height: 380px;
+  white-space: pre;
+}
+
+.circle,
+#circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #F012BE;
+}
+
+.square,
+#square {
+  width: 40px;
+  height: 40px;
+  background-color: #B10DC9;
+}
+
+.eye,
+#eye {
+	width: 40px;
+	height: 40px;
+  border-radius: 5% 140% 5% 120%;
+  /*clip-path: polygon(50% 0, 100% 100%, 0 100%);*/
+  background-color: #85144b;
+}

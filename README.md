@@ -13,3 +13,9 @@ Project for a one-week RC pop-up in Berlin.
   * [GitHub repo on primitive pictures](https://github.com/fogleman/primitive) - thanks Adrien!
 
 3. Check out the [Drawing with the Right Side of the Brain](https://www.amazon.de/Drawing-Right-Side-Brain-Definitive/dp/1585429201) book - thanks Mehul!
+
+Progress:
+- created a simple demo - [preview](https://codepen.io/trueskawka/pen/javVOM)
+- explored `box-shadow`'s and `drop-shadow`'s limits, mainly their inability to
+duplicate more than one custom shape consistently
+- read a bit about primitive images and planned work for tomorrow
