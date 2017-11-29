@@ -19,3 +19,17 @@ Progress:
 - explored `box-shadow`'s and `drop-shadow`'s limits, mainly their inability to
 duplicate more than one custom shape consistently
 - read a bit about primitive images and planned work for tomorrow
+
+### Day 2
+
+1. Explore gradients and mirroring them
+2. Figure out if I want to write a custom CSS filter
+3. Go through some parts of "Drawing on the Right Side of the Brain"
+4. Further explore the primitive images
+5. Make Google Code-In logo in pure CSS
+
+Progress:
+- decided not to try and write a custom CSS filter
+- changed the implementation from `box-shadow` to gradients - [preview](https://codepen.io/trueskawka/pen/OOBOVR)
+- drew 4 exercises from "Drawing on the Right Side of the Brain"
+- made a [GCI logo animation](https://codepen.io/trueskawka/pen/ooazRq)

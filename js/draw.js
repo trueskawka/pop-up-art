@@ -1,15 +1,14 @@
 window.onload = addListeners;
-var css, cssBefore, cssAfter;
+var css;
 var parentPos;
-
 
 function addListeners(){
   var circle = document.getElementById('circle');
   var square = document.getElementById('square');
-  var eye = document.getElementById('eye');
+  var triangle = document.getElementById('triangle');
   circle.addEventListener('mousedown', addElement);
   square.addEventListener('mousedown', addElement);
-  eye.addEventListener('mousedown', addElement);
+  triangle.addEventListener('mousedown', addElement);
 }
 
 function addElement(e){
@@ -53,113 +52,67 @@ function hereDoc(f) {
     replace(/\*\/[^\/]+$/, '');
 }
 
-function getCSS(name) {
-  var cssString = "";
-  var elements = document.getElementsByClassName(name);
-  if (elements.item(0)) {
-    cssString +=  "    box-shadow: ";
-  }
-  for (var i = 0; i < elements.length; i++) {
-    var element = elements.item(i);
-    var childrenPos = element.getBoundingClientRect();
-    var top = childrenPos.top - parentPos.top + 40;
-    var left = childrenPos.left - parentPos.left;
-    if (i > 0) {
-      cssString += "           ";
-    }
-    cssString += left + "px " + top + "px " + "0 currentColor";
-    if (i < elements.length - 1) {
-      cssString += ",\n"
-    } else {
-      cssString += ";\n"
-    }
-  }
-  return cssString;
-}
-
-/*filters are additive and it doesn't work well, as it duplicates shapes*/
-// function getCSSfilter(name) {
-//   var cssString = "";
-//   var elements = document.getElementsByClassName(name);
-//   if (elements.item(0)) {
-//     cssString +=  "    filter: ";
-//   }
-//   for (var i = 0; i < elements.length; i++) {
-//     var element = elements.item(i);
-//     var childrenPos = element.getBoundingClientRect();
-//     var top = childrenPos.top - parentPos.top + 40;
-//     var left = childrenPos.left - parentPos.left;
-//     if (i > 0) {
-//       cssString += "      ";
-//     }
-//     cssString += "drop-shadow(" + left + "px " + top + "px " + "0 currentColor";
-//     if (i >= elements.length - 1) {
-//       cssString += ");\n"
-//     } else {
-//       cssString += ")\n";
-//     }
-//   }
-//   return cssString;
-// }
-
 function generateCSS(){
-  /* naive approach
-    circle is the main div
-    square is the before
-    eye is the after
-  */
+  /* gradient approach */
   parentPos = document.getElementById('canvas').getBoundingClientRect();
 
   css = hereDoc(function(){/*!
-      position: relative;
-      width: 40px;
-      height: 40px;
-      top: -40px;
-      background-color: transparent;
+    position: relative;
+    display: inline-block;
+    float: left;
+    width: 400px;
+    height: 400px;
+    box-shadow: inset 0 0 1px black;
 
-      border-radius: 50%;
-
-      color: #F012BE;
   */});
 
-  cssBefore = hereDoc(function(){/*!
-      position: absolute;
-      content: "";
-      width: 40px;
-      height: 40px;
+  if ($('#canvas').children()[0]) {
+    css +=  "  background: ";
+  }
 
-      color: #B10DC9;
+  var cssGradient = "";
+
+  $('#canvas').children().each(function(index, element){
+    var childrenPos = element.getBoundingClientRect();
+    var top = childrenPos.top - parentPos.top;
+    var left = childrenPos.left - parentPos.left;
+    var gradient;
+
+    if (element.className == 'circle') {
+      gradient = "\n      radial-gradient(circle, #F012BE 70%, transparent 70%)";
+      gradient += "\n      " + left + "px " + top + "px";
+    } else if (element.className == 'square') {
+      gradient = "\n      linear-gradient(#B10DC9 0%, #B10DC9 100%)";
+      gradient += "\n      " + left + "px " + top + "px";
+    } else if (element.className == 'triangle') {
+      gradient = "\n      linear-gradient(-63deg, #85144b 30%, transparent 30%)";
+      left -= 20;
+      gradient += "\n      " + left + "px " + top + "px,";
+      gradient += "\n      linear-gradient(63deg, #85144b 30%, transparent 30%)";
+      left += 40;
+      gradient += "\n      " + left + "px " + top + "px";
+    }
+
+    if (index > 0) {
+      gradient += ","
+    }
+
+    cssGradient = gradient + cssGradient;
+  });
+
+  css += cssGradient + ";\n";
+
+  css += hereDoc(function(){/*
+    background-size: 10% 10%;
+    background-repeat: no-repeat;
   */});
-
-  cssAfter = hereDoc(function(){/*!
-      position: absolute;
-      content: "";
-      width: 40px;
-      height: 40px;
-      border-radius: 5% 140% 5% 120%;
-
-      color: #85144b;
-  */});
-
-  css += getCSS('circle');
-  cssBefore += getCSS('square');
-  cssAfter += getCSS('eye');
-  console.log(cssAfter);
 
   cssToShow = ".drawing {" + css + "}";
-  cssToShow += "\n\n.drawing:before {" + cssBefore + "}";
-  cssToShow += "\n\n.drawing:after {" + cssAfter + "}";
-
-  /*This is an offset for the purpose of testing with JS*/
-  cssBefore += "top: -80px; position: relative;";
-  cssAfter += "top: -120px; position: relative;";
 
   var div = document.getElementById('gen-code');
   div.innerHTML = cssToShow;
 }
 
 function testCSS() {
-  document.getElementById('test-circle').style = css;
-  document.getElementById('test-square').style = cssBefore;
-  document.getElementById('test-eye').style = cssAfter;
+  document.getElementById('test-canvas').style = css;
 }

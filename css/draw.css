@@ -59,11 +59,12 @@
   background-color: #B10DC9;
 }
 
-.eye,
-#eye {
-	width: 40px;
-	height: 40px;
-  border-radius: 5% 140% 5% 120%;
-  /*clip-path: polygon(50% 0, 100% 100%, 0 100%);*/
-  background-color: #85144b;
+.triangle,
+#triangle {
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+
+  border-bottom: 40px solid #85144b;
 }
